@@ -1,0 +1,35 @@
+OS/2+EMX Python 2.3.3 Update
+----------------------------
+
+This package contains several updated files for the binary distribution
+of Python 2.3.3 released on December 25, 2003.
+
+This package incorporates the following fixes/changes:
+
+- fixed: a bug resulting in Python dumping core when a file is closed more
+  than once; observed with the newlist script from Mailman 2.0.13.
+
+- spawnvp(), spawnvpe(), spawnlp() and spawnlpe() are now supported.
+
+- the socketmodule now supports AF_UNIX (aka Unix domain sockets).
+  Remember that the socket name must be prefixed with "\\socket32"
+  or "/socket32" (required by OS/2 TCP/IP sockets routines).
+
+Thanks to John Poltorak for the heads-up on these.
+
+The patches for these changes will be committed to Python's CVS repo
+on both the head (Python 2.4 to-be) and 2.3 maintenance branches, so
+will be in Python 2.4 and Python 2.3.4 when they are released.
+
+To install, either unpack this archive in the top level of your Python
+2.3.3 installation, or copy the files in this archive over the top of
+the matching files in that installation.  Backing up your Python
+installation before doing this would be prudent.
+
+
+Andrew MacIntyre
+E-mail: andymac@bullseye.apana.org.au, or andymac@pcug.org.au
+Web:    http://www.andymac.org/
+
+4 April, 2004.
+

@@ -1,0 +1,16 @@
+This directory contains passwd & group files, as used by the pwd.py and 
+grp.py modules.  The pwd.pyd dynamically loadable module uses the EMX 
+library's emulation of the unix routines, which synthesizes the info 
+with no reference to any data file.
+
+These versions of these files use the OS/2 standard path delimiter (";") 
+as the field separator, rather than the unix standard ":".  This means 
+that all paths in these files don't need bizarre conversions to support 
+drive letters.
+
+If you have other software that insists on a different variation, the 
+supplied pwd and grp modules handle several variations.  Refer to the 
+module docstrings for the details.
+
+Andrew MacIntyre
+11 June, 2001.

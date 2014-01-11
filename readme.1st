@@ -1,0 +1,77 @@
+torpak/2 packaged by dink
+
+why bittorrent, especially since its not as easy as using xnap/limewire/etc??
+with bittorrent, you're almost guaranteed to receive the file you want at
+very high speeds, with limewire/xnap, theres a 20% chance you'll actually
+receive an entire file thats bigger than 100megs
+
+torpak contains:
+python, bittorrent & a nice launcher, preconfured to run without
+frying your brain setting up python 'n stuff.
+
+whats new:
+updated to the latest version of python + socket updates
+updated the bittorrent client. (fixes the "update your client" errors)
+changed the default ports to avoid problems with certain trackers
+can be installed in Mozilla/2
+
+installation:
+unzip dist.zip to c:\tor
+make an icon on your wps called torrent/2, using path & filename of:
+  c:\tor\tor.exe
+working directory:
+  c:\tor
+
+go over to the "Window" tab and for Object open behavior check
+"Create new window"
+
+installation in Mozilla/2:
+
+go to edit -> prefs -> helper applications
+click New Type, make it look like...
+
+  Mime Type: application/x-bittorrent
+  Description: torrent
+  Extension: torrent
+  Open it With: c:\tor\tor.exe
+
+Uncheck the "Always ask..." box
+Click OK
+
+click New Type again..
+
+  Mime Type: text/plain
+  Description: torrent
+  Extension: torrent
+  Open it With: c:\tor\tor.exe
+
+Uncheck the "Always ask..." box
+Click Proceed anyway
+
+how to leech:
+go to www.suprnova.org - download some .torrent files to c:\tor.  Load a
+copy of torrent/2 for every .torrent you downloaded and double click the
+.torrent or hit enter on it, then wait a bit and it'll start downloading.
+
+ESSENTIAL:
+1: you _must_ install the latest tcp/ip stack fixes, otherwise OS/2 will trap
+because of a bug in the stack.  Its located at:
+http://hobbes.nmsu.edu/pub/new/newstack.zip
+
+2: make sure you have the latest emx runtime, located at:
+http://hobbes.nmsu.edu/pub/os2/dev/emx/v0.9d/emxrt.zip
+
+3: if downloading to a jfs partition, make sure you use jfs.ifs from xr_c004
+or higher (recommended: jfs20040308.zip) otherwise your system might trap
+due to a bug in the older jfs filesystem builds
+
+4: don't be discouraged by "connection refused from tracker" messages,
+it'll connect sooner or later and you'll get your file
+
+5: remember: only download legal/non-pirated material with this application :)
+
+note: sometimes python.exe will die @ startup (after launching a .torrent)
+and create an entry in popuplog.os2, this is a bug in python and it only
+happens once in a great while.  just don't be concerned if this happens,
+simply re-launch the .torrent.
+

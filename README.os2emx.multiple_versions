@@ -1,0 +1,77 @@
+This file contributed by Dr. David Mertz <mertz@gnosis.cx>
+==========================================================
+
+Using multiple versions of Python
+
+Some users might want to use multiple Python versions on their OS/2
+systems (for example, to test compatibility of code).  By using the
+BEGINLIBPATH variable rather than adding Python to the LIBPATH in
+CONFIG.SYS, a command session can select a Python version.  For
+example, the below command file will allow a user to either run the
+default, or a variant Python version transparently:
+
+  ---------- File: SETPYTHON.CMD ----------
+  @echo off
+  if '%PYTHONHOME%' == '' GOTO SETUP
+  GOTO END
+  :SETUP
+  if '%1' == '151' GOTO PY151
+  if '%1' == '152' GOTO PY152
+  if '%1' == '20'  GOTO PY20
+  if '%1' == '21'  GOTO PY21
+  if '%1' == '22'  GOTO PY22
+  if '%1' == '23'  GOTO PY23
+  :PY22
+  echo -- Using Python v2.2/emx --
+  SET BEGINLIBPATH=d:\py22
+  SET PATH=d:\py22;%path%
+  SET PYTHONHOME=d:/py22
+  SET PYTHONPATH=d:/Py22/Lib;d:/Py22/Lib/plat-os2emx;d:/Py22/Lib/lib-dynload;d:/Py22/Lib/site-packages
+  SET TERMINFO=d:/py22/Terminfo
+  SET TERM=os2
+  GOTO END
+  :PY23
+  echo -- Using Python v2.3b1/emx --
+  SET BEGINLIBPATH=d:\py23
+  SET PATH=d:\py23;%path%
+  SET PYTHONHOME=d:/py23
+  SET PYTHONPATH=d:/Py23/Lib;d:/Py23/Lib/plat-os2emx;d:/Py23/Lib/lib-dynload;d:/Py23/Lib/site-packages
+  SET TERMINFO=d:/py23/Terminfo
+  SET TERM=os2
+  GOTO END
+  :PY21
+  echo -- Using Python v2.1/emx --
+  SET BEGINLIBPATH=d:\py21
+  SET PATH=d:\py21;%path%
+  SET PYTHONHOME=d:/py21
+  SET PYTHONPATH=d:/Py21/Lib;d:/Py21/Lib/plat-os2emx;d:/Py21/Lib/lib-dynload;d:/Py21/Lib/site-packages
+  SET TERMINFO=d:/py21/Terminfo
+  SET TERM=os2
+  GOTO END
+  :PY20
+  echo -- Using Python v2.0/emx --
+  SET BEGINLIBPATH=d:\py20
+  SET PATH=d:\py20;%path%
+  SET PYTHONHOME=d:/py20
+  SET PYTHONPATH=d:/Py20/Lib;d:/Py20/Lib/plat-os2emx;d:/Py20/Lib/lib-dynload;d:/Py20/Lib/site-packages
+  SET TERMINFO=d:/py20/Terminfo
+  SET TERM=os2
+  GOTO END
+  :PY152
+  echo -- Using Python v1.5.2/VAC++ --
+  SET BEGINLIBPATH=d:\py152
+  SET PATH=d:\py152;%path%
+  SET PYTHONHOME=d:\py152
+  SET PYTHONPATH=d:\Py152\Lib;d:\Py152\Lib\plat-win
+  GOTO END
+  :PY151
+  echo -- Using Python v1.5.1 --
+  SET BEGINLIBPATH=d:\py151
+  SET PATH=d:\py151;%path%
+  SET PYTHONHOME=d:\py151
+  SET PYTHONPATH=d:\Py151\Lib;d:\Py151\Lib\plat-win
+  SET TCL_LIBRARY=d:/py151/lib/tcl
+  SET TK_LIBRARY=d:/py151/lib/tk
+  GOTO END
+  :END
+

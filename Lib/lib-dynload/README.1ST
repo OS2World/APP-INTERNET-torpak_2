@@ -1,0 +1,160 @@
+Experimental OS/2 TCP/IP v4.3 socket & select support for Python 2.3.x
+----------------------------------------------------------------------
+
+BitTorrent is a popular Python utility, with a penchant for network
+throughput.
+
+There have been 2 different reported problems with BitTorrent when used
+in conjunction with the EMX port of Python 2.3.2/2.3.3 on systems running
+v4.3 of the OS/2 TCP/IP stack:
+
+- a select() issue; and
+
+- traps from inside the TCP/IP stack.
+
+The EMX runtime itself provides a BSD sockets API, which is written to
+use the sockets API from the older v4.0 TCP/IP stack.
+
+The v4.3 stack provides a compatibility layer, and EMX based sockets
+code, including the standard sockets extension in the EMX port of Python,
+generally works Ok.  Until BitTorrent appeared...
+
+
+This package
+------------
+
+By using a shim library that redirects sockets requests from the EMX
+sockets facility direct to the native TCP/IP v4.3 interface with minimal
+change to the parent source code, this package attempts to circumvent
+the layers of emulation between Python and the TCP/IP stack.
+
+The 2 .PYD files are replacements for the files of the same name in the
+Lib/lib-dynload subdirectory of the standard binary distribution of
+Python 2.3.3 for EMX, for experimental use with BitTorrent in assessing
+the source of the abovementioned problems.
+
+This package has proven to resolve the select() issue mentioned above,
+but the issue regarding the traps inside the TCP/IP stack is still
+unresolved due to insufficient test coverage of recent BitTorrent versions.
+
+
+Legal stuff
+-----------
+
+The Python extension modules are covered by the Python licence, which
+is distributed with the EMX port of Python.
+
+I haven't made any decision about releasing the source code to the
+shim library yet.  The library code itself is unencumbered, but the
+header files required for the library to be used contain material
+from header files included in the OS/2 Developer's Toolkit v4.5, which
+I need to review in more detail.
+
+
+Prerequisites
+-------------
+
+- version of OS/2 with v4.21 or later of the TCP/IP stack
+  (%ETC%\DLL subdirectory will contain TCPIP32.DLL), with the TCP/IP
+  updates from the NEWSTACK.ZIP package from the Hobbes archive.
+
+- EMX port of Python 2.3.3 or 2.3.2
+
+- BitTorrent v3.3 or later
+
+
+YOU HAVE BEEN WARNED!!!
+-----------------------
+
+1.  This package is only recommended to users of BitTorrent who are
+seeing the select() or trap problems, and who have the prerequisite
+software environment.  If you aren't seeing any problems, don't
+install these files.
+
+2.  If your system doesn't have a TCPIP32.DLL, don't install this
+package - IT WILL NOT WORK.
+
+3.  Because of the redirection of the sockets requests, code that
+relies on EMX's emulation of Unix-like behaviour such as the
+inheritance of sockets across a fork() invocation or the ability
+to use select() on files or devices (in addition to sockets) will
+not work.  This includes some code in the Python regression test
+suite.
+
+4.  This package has received very limited testing.  I don't have
+the infrastructure to test BitTorrent properly, so expect problems.
+Notwithstanding this, it has worked for one person (with an older,
+customised, version of BitTorrent).
+
+
+Installation
+------------
+
+Because this package is recommended only for use with BitTorrent,
+there are 2 recommended installation strategies.
+
+1.  If BitTorrent is the only reason you have Python installed:
+
+    a)  be prudent and back up your Python installation;
+
+    b)  copy the _SOCKET.PYD and SELECT.PYD files from this archive over
+        the files of the same name in %PYTHONHOME%\Lib\lib-dynload;
+
+    c)  test BitTorrent.
+
+
+2.  You use Python for other things besides BitTorrent:
+
+    a)  be prudent and back up your Python installation;
+
+    b)  create a subdirectory under %PYTHONHOME%\Lib - I suggest
+        exp-dynload, but this isn't critical as long as it doesn't
+        clash with any file (ignoring the .py* extension) in
+        %PYTHONHOME%\Lib;
+
+    c)  copy the _SOCKET.PYD and SELECT.PYD files from this archive into
+        the subdirectory created in b) above;
+
+    d)  modify the batchfile you use to start BitTorrent to add
+        the subdirectory created in b) _before_ %PYTHONHOME%\Lib\lib-dynload
+        in the PYTHONPATH environment variable - if you don't have a
+        batchfile for this purpose, I strongly recommend you create one;
+
+    e)  test BitTorrent, and your other Python applications.
+
+
+Thanks
+------
+
+In preparing this package, I would like to particularly thank:
+
+- "dink", who reported the problems in the first place, and has tested
+  this package.
+
+- Serenity Systems (www.ecomstation.com) who gave me the copy of eCS 1.1
+  which allowed me to build this package.
+
+- the OpenWatcom team (www.openwatcom.org), whose development tools
+  (distributed with eCS) made building the shim library practical.
+
+
+Feedback
+--------
+
+If you install this package, your feedback on whether it allows recent
+versions of BitTorrent to be used on OS/2 (or not) is very important.
+
+Without knowing that it is useful, I have no plans to maintain this
+package, or to expend further effort trying to work around the problems
+BitTorrent provoke.
+
+Please email success or failure reports to the address below, with as much
+detail on the versions of OS/2 or eCS and the TCP/IP stack you have
+installed (including any TCP/IP fixes) as you can identify.
+
+
+Thanks
+Andrew MacIntyre
+http://www.andymac.org/
+andymac@bullseye.apana.org.au (preferred)
+andymac@pcug.org.au           (alternate)
